@@ -1,0 +1,164 @@
+<%-- 
+  Title         : Assignment2.
+  Subject       : Internet Programming
+  Author        : Mohd Rafyiq Bin Ramli
+  Matrix Number : SX085606CJD04 
+  Lecturer      : Dr. Hishammuddin Bin Asmuni
+--%>
+    <body>
+        <%@include file="htmlheadtag.jsp" %>
+        <%@include file="header.jsp" %>
+
+
+        <div class="container">
+            <%@include file="menu.jsp" %>
+            <div class="row">
+                <div class="box">
+                    <div class="col-lg-6 text-center">
+                        <h1 class="brand-name">Mark Converter</h1>
+                    </div>
+                    <div class="col-lg-6 text-center">
+                        <img src="img/mark1.png" alt="" width="100%" />
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="box">
+                    <div class="col-lg-6">
+                        <hr>
+                            <h2 class="intro-text text-center">Question 4 :
+                                <strong>Mark Converter Problem</strong>
+                            </h2>
+                        <hr>
+
+                        <hr class="visible-xs">
+                        <p>Develop a web program to convert Mark to Grade and Point, with:</p>
+                        <p>Mark: from 0 to 100</p>
+                        <table border="0">
+                            <tr align="center"><td>Mark</td><td>Gred</td><td>Point</td>
+                            </tr>
+                            <tr align="center"><td>90 - 100 : </td><td>A</td><td>4</td>    
+                            </tr>
+                            <tr align="center"><td>80 - 89 : </td><td>B</td><td>3</td>    
+                            </tr>
+                            <tr align="center"><td>70 - 79 : </td><td>C</td><td>2</td>    
+                            </tr>
+                            <tr align="center"><td>60 - 69 : </td><td>D</td><td>1</td> 
+                            </tr>
+                            <tr align="center"><td> 0 - 59 : </td><td>F</td><td>0</td> 
+                            </tr>
+                        </table>    
+
+                    </div>
+                    <div class="col-lg-6">
+                        <hr>
+                        <h2 class="intro-text text-center">Answer :<strong> MARK CONVERTER</strong></h2>
+                        <hr>
+                        <hr class="visible-xs">
+                        <div align="center">
+                            <div style="background-color:black; color:white; font-weight:bold; " align="center">MARK CONVERTER</div><br>
+                            <form action="mark.jsp" method="POST">
+                                Mark in percent :
+                                <input type="text" name="markTextBox" id="markTextBox"><br><br>
+                                <input type="checkbox" name="gradeCheckBox" id="gradeCheckBox">
+                                <label for="gradeCheckBox">Grade</label>
+                                <input type="checkbox" name="pointCheckBox" id="pointCheckBox">
+                                <label for="pointCheckBox">Point</label><br><br>
+                                <input type="submit" value="Convert" name="convertButton" />
+                            </form>
+                        </div>
+
+                        <%
+                        String semakmark = request.getParameter("markTextBox");
+                        String semakgred = request.getParameter("gradeCheckBox");
+                        String semakpoint = request.getParameter("pointCheckBox");
+                        
+                        if (semakmark == null && semakgred == null && semakpoint == null )
+                        {%>
+                            <div align="center"><h4>You can Enter Mark and Choose Gred or Point</h4></div>
+                     <% } else if (semakmark.length() == 0 && semakgred == null && semakpoint == null) {  %>
+                           <div align="center"><h4>Please Enter Mark and Choose Gred or Point</h4></div>
+                    <% }else if (semakmark.length() != 0 && semakgred == null && semakpoint == null) { %>
+                           <div align="center"><h4>Please Choose Gred or Point</h4></div>
+                    <% }else {
+                            boolean selectGrade, selectPoint;
+                            selectGrade = false;
+                            selectPoint = false;
+
+                            double mark = Double.parseDouble(request.getParameter("markTextBox"));
+
+                            if(request.getParameter("gradeCheckBox") != null)
+                                selectGrade = true;
+                            if(request.getParameter("pointCheckBox")!= null)
+                                selectPoint = true;
+                            
+                            //Start : Mark Converter
+                            String point;
+                            if (mark>100)
+                                point = "invalid range";
+                            else if(mark >= 90)
+                                point = "4";
+                            else if(mark >=80)
+                                point = "3";
+                            else if (mark >=70)
+                                point = "2";
+                            else if (mark >=60)
+                                point = "1";
+                            else point = "0";
+
+                            String grade;
+                            if (mark>100)
+                                grade = "invalid range";
+                            else if(mark >= 90)
+                                grade = "A";
+                            else if(mark >=80)
+                                grade = "B";
+                            else if (mark >=70)
+                                grade = "C";
+                            else if (mark >=60)
+                                grade = "D";
+                            else grade = "E";
+
+
+                            String printchoose;
+                            if (selectGrade == true && selectPoint == true)
+                                printchoose = "Grade : " + grade + " and Point : " + point; 
+                            else if (selectGrade == true)
+                                printchoose = "Grade : " + grade; 
+                            else if(selectPoint == true)
+                                printchoose = "Point : " + point;                
+                            else printchoose = "Please Select Grade or Point";
+                            //Fininsh : Mark Converter    
+%>
+        <div align="center">
+           <h4>Your result is <%= printchoose %></h4>    
+        </div>
+
+ <% } %> 
+                    </div>                
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="box">
+
+
+                        <hr>
+                        <h2 class="intro-text text-center">JSP 
+                            <strong>Code</strong>
+                        </h2>
+                        <hr>
+                        <iframe src="sourcecode/mark.txt" width="100%" height="100%"></iframe>                                       
+
+                </div>
+        </div>
+        </div>
+
+
+
+        <%@include file="footer.jsp" %>
+    </body>
+</html>
